@@ -5,7 +5,7 @@ edition = "2021"
 #build = "build/build.rs"
 description = "a simple lib for java class file parse or edit"
 license = "Apache-2.0"
-repository = "https://github.com/JavaGuard/jclass"
+repository = "https://github.com/kyle-derrick/jclass-rs"
 
 #[profile.release]
 #debug = true
