@@ -1,18 +1,18 @@
+use jclass::attribute_info::CodeAttribute;
+use jclass::common::constants::CODE_TAG;
+use jclass::constant_pool::ConstantValue;
+use jclass::jclass_info::JClassInfo;
+use jclass::util::class_scan::fast_scan_class;
 use std::cmp::{max, min};
 use std::collections::HashSet;
 use std::fs::{read, File};
 use std::io::{BufWriter, Cursor, Read};
 use std::time::Instant;
-use jclass::jclass_info::JClassInfo;
-use jclass::attribute_info::CodeAttribute;
-use jclass::common::constants::CODE_TAG;
-use jclass::constant_pool::ConstantValue;
-use jclass::util::class_scan::fast_scan_class;
 
 #[cfg(target_os = "linux")]
-const FILE_PATH: &str = "/home/kyle/data/code/java/java-guard/target/classes/io/kyle/javaguard/transform/ClassTransformer.class";
+const FILE_PATH: &str = "/mnt/d/data/code/git-cmp/fta-vpn/fta-vpn-module/build/classes/java/main/com/ws/ftavpn/plugin/firewall/service/FirewallPluginService.class";
 #[cfg(target_os = "windows")]
-const FILE_PATH: &str = "D:\\data\\code\\project\\JavaGuard\\JavaGuard\\target\\classes\\javassist\\bytecode\\ClassDecryption.class";
+const FILE_PATH: &str = "D:\\data\\code\\git-cmp\\fta-vpn\\fta-vpn-module\\build\\classes\\java\\main\\com\\ws\\ftavpn\\plugin\\firewall\\service\\FirewallPluginService.class";
 
 #[test]
 fn base_test() {
@@ -198,17 +198,16 @@ fn test_class_check() {
     let mut content = File::open(FILE_PATH).unwrap();
     let mut content_data = Vec::new();
     content.read_to_end(&mut content_data).unwrap();
-    let name_bytes = "InnerClasses".as_bytes();
-    println!("class info: {:?}", fast_scan_class(&content_data, name_bytes, false));
+    println!("class info: {:?}", fast_scan_class(&content_data));
     let now = Instant::now();
     for _ in 0..10000 {
-        let _ = fast_scan_class(&content_data, name_bytes, false);
+        let _ = fast_scan_class(&content_data);
     }
     println!(": {}", now.elapsed().as_nanos());
-    println!("class info: {:?}", fast_scan_class(&content_data, &[], true));
+    println!("class info: {:?}", fast_scan_class(&content_data));
     let now = Instant::now();
     for _ in 0..10000 {
-        let _ = fast_scan_class(&content_data, &[], true);
+        let _ = fast_scan_class(&content_data);
     }
     println!(": {}", now.elapsed().as_nanos());
 }
